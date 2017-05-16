@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Angular2.0 QuickStart</title>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('main.js').catch(function(err){ console.error(err); });
+      class Age {
+      	constructor(x,y){
+      		this.x = x;
+      		this.y = y;
+      	}
+      	plus(){
+      		return this.x + this.y
+      	}
+      	multi(){
+      		return this.x * this.y
+      	}
+      }
+      Object.assign(Age.prototype,{
+      	subst(){
+      		return this.x - this.y;
+      	},
+      	comple(){
+      		return this.x % this.y
+      	}
+      });
+      function Stu(){
+      	this.x = 9;
+      };
+      Stu.prototype.num = function(){ return this.x };
+      var age = new Age(12,23);
+      var stu = new Stu();
+      console.log(stu.num());
+      console.log(Object.keys(age.__proto__));
+      stu.__proto__.plus = function(){ return this.x + 10 }
+      console.log(Object.keys(new Stu().__proto__));
+      class Pc {
+      	constructor(x){
+      		this.x = x;
+      		this.printName = this.printName.bind(this);
+      		this.test = () =>{
+      			this.print('Hello '+this.x)
+      		};
+      		this.testName = function(){
+      			this.print('Hello '+this.x);
+      		}.bind(this)
+      	}
+      	printName(){
+      		this.print('Hello '+this.x);
+      	}
+      	print(name){
+      		console.log(name)
+      	}
+      }
+      const { printName,print,test,testName } = new Pc('彭铖');
+      printName();
+      print('pc')
+      test();
+      testName();
+      
+      class A {
+      	constructor(x,y){
+      		this.x = x;
+      		this.y = y;
+      	}
+      	plus(){
+      		return this.x + this.y
+      	}
+      }
+      class B extends A {
+      	constructor(x,y,color){
+      		super(x,y);
+      		this.color = color;
+      	}
+      	multi(){
+      		console.log(this.color);
+      	}
+      }
+      class C extends A {
+      	
+      }
+      var a = new A(12,24);
+      var b = new B(2,4,'red');
+      var c = new C(3,9);
+      console.log(c);
+      var a = [1,2,3]
+      var b = [4]
+      b.push(...a);
+      console.log(b)
+    </script>
+  </head>
+
+  <body>
+    <my-app>Loading AppComponent content here ...</my-app>
+  </body>
+</html>
